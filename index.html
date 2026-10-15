@@ -8,29 +8,27 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌃</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+  /* Page colors follow the visitor's light/dark setting.
+     The hero is a night scene, so it always stays dark. */
   :root {
-    --night: #0D1230;
-    --dusk: #1A2150;
-    --text: #E9E7F2;
-    --muted: #A1A6C6;
-    --amber: #F4B26A;
-    --cyan: #7CCFE8;
-    --line: rgba(233, 231, 242, 0.14);
-    --building: #070A1E;
+    --bg: #0C1029;
+    --text: #ECE8F4;
+    --muted: #A3A6C4;
+    --accent: #F2A65A;
+    --accent-2: #E8849A;
+    --line: rgba(236, 232, 244, 0.13);
     color-scheme: dark;
   }
   @media (prefers-color-scheme: light) {
     :root {
-      --night: #F1F2F8;
-      --dusk: #DADDF0;
-      --text: #141838;
-      --muted: #4E5478;
-      --amber: #A85F10;
-      --cyan: #1F7FA0;
-      --line: rgba(20, 24, 56, 0.16);
-      --building: #1A2150;
+      --bg: #EDEEF6;
+      --text: #161A3A;
+      --muted: #535879;
+      --accent: #A3570F;
+      --accent-2: #B23A58;
+      --line: rgba(22, 26, 58, 0.15);
       color-scheme: light;
     }
   }
@@ -38,74 +36,101 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
-    background: var(--night);
+    background: var(--bg);
     color: var(--text);
-    font-family: "Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-family: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
     font-size: 18px;
-    line-height: 1.6;
+    line-height: 1.65;
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   a { color: inherit; }
-  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
-  /* Hero: the night skyline is the one memorable thing */
+  /* ---------- Hero ---------- */
   .hero {
     position: relative;
-    min-height: 88vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: calc(64px + env(safe-area-inset-top, 0px)) 24px 220px;
-    background: linear-gradient(180deg, var(--night) 0%, var(--dusk) 100%);
+    color: #F3EEF8;
+    padding: calc(72px + env(safe-area-inset-top, 0px)) 24px 0;
+    background:
+      radial-gradient(120% 60% at 70% 100%, rgba(232, 132, 120, 0.55) 0%, rgba(232, 132, 120, 0) 60%),
+      radial-gradient(80% 50% at 20% 95%, rgba(150, 90, 190, 0.45) 0%, rgba(150, 90, 190, 0) 70%),
+      linear-gradient(180deg, #05071A 0%, #0F1438 45%, #2A1E52 75%, #5A2F5E 100%);
     overflow: hidden;
   }
-  .hero-inner { max-width: 760px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+  .hero-inner { max-width: 1040px; margin: 0 auto; position: relative; z-index: 2; }
   h1 {
-    font-size: clamp(56px, 11vw, 120px);
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.03em;
+    font-family: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    font-weight: 900;
+    font-size: clamp(72px, 15vw, 176px);
+    line-height: 0.84;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
     margin: 0 0 28px;
-    color: var(--amber);
+    color: #F6B46A;
+    text-shadow: 0 0 40px rgba(246, 180, 106, 0.35);
   }
-  .lede { font-size: clamp(20px, 2.6vw, 24px); max-width: 32ch; margin: 0 0 36px; }
-  .links { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 0; padding: 0; list-style: none; }
+  .lede { font-size: clamp(19px, 2.4vw, 23px); max-width: 34ch; margin: 0 0 30px; color: #DCD6EA; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 0; padding: 0; list-style: none; }
   .links a {
+    font-family: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 0.02em;
     text-decoration: none;
-    font-weight: 600;
-    border-bottom: 2px solid var(--line);
-    padding-bottom: 2px;
+    border-bottom: 2px solid rgba(243, 238, 248, 0.25);
   }
-  .links a:hover { border-color: var(--amber); }
+  .links a:hover { color: #F6B46A; border-color: #F6B46A; }
 
-  .skyline { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; z-index: 1; }
-  .skyline svg { width: 100%; height: 100%; display: block; }
-  .win { fill: var(--amber); }
-  .win.cool { fill: var(--cyan); }
-  .star { fill: var(--text); opacity: 0.6; }
+  .city { position: relative; height: clamp(240px, 34vw, 400px); margin: 24px -24px 0; z-index: 1; }
+  .city svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
   @media (prefers-reduced-motion: no-preference) {
-    .win.blink { animation: blink 6s ease-in-out infinite; }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+    .blink { animation: blink 7s ease-in-out infinite; }
+    .beacon { animation: beacon 2.4s steps(1) infinite; }
+    .twinkle { animation: twinkle 4s ease-in-out infinite; }
+    .ripple { animation: ripple 3s ease-in-out infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 45%, 60% { opacity: 0.08; } }
+    @keyframes beacon { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.1; } }
+    @keyframes twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.2; } }
+    @keyframes ripple { 0%, 100% { transform: translateX(0); opacity: 0.35; } 50% { transform: translateX(3px); opacity: 0.15; } }
   }
 
-  /* Content */
-  main { max-width: 760px; margin: 0 auto; padding: 72px 24px 40px; }
-  section + section { margin-top: 72px; }
-  h2 { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 20px; }
-  p { margin: 0 0 16px; }
-  .muted { color: var(--muted); }
-
-  .entry { padding: 22px 0; border-top: 1px solid var(--line); }
-  .entry:last-child { border-bottom: 1px solid var(--line); }
-  .entry h3 { font-size: 22px; font-weight: 600; line-height: 1.3; margin: 0 0 6px; }
-  .entry h3 a { text-decoration: none; }
-  .entry h3 a:hover { color: var(--amber); }
-  .entry p { margin: 0; color: var(--muted); }
-  .where { font-size: 15px; color: var(--cyan); margin-bottom: 4px; }
+  /* ---------- Content ---------- */
+  main { max-width: 1040px; margin: 0 auto; padding: 80px 24px 40px; }
+  section {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 8px 48px;
+    padding: 36px 0;
+    border-top: 1px solid var(--line);
+  }
+  section:first-child { border-top: none; padding-top: 0; }
+  h2 {
+    font-family: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1;
+    margin: 4px 0 0;
+    color: var(--accent);
+  }
+  .body { max-width: 62ch; }
+  p { margin: 0 0 14px; }
+  .entry + .entry { margin-top: 32px; }
+  .entry h3 { font-size: 23px; line-height: 1.3; margin: 0 0 8px; font-weight: 700; }
+  .entry h3 a { text-decoration-color: var(--line); text-underline-offset: 5px; text-decoration-thickness: 2px; }
+  .entry h3 a:hover { color: var(--accent-2); text-decoration-color: var(--accent-2); }
+  .entry p { color: var(--muted); margin: 0 0 6px; }
+  .meta { font-size: 15px; color: var(--muted); font-style: italic; }
 
   footer {
-    max-width: 760px; margin: 0 auto; padding: 32px 24px 48px;
-    color: var(--muted); font-size: 15px;
+    max-width: 1040px; margin: 0 auto; padding: 28px 24px 56px;
+    color: var(--muted); font-size: 15px; border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    section { grid-template-columns: 1fr; padding: 28px 0; }
+    h2 { font-size: 34px; margin-bottom: 8px; }
+    main { padding-top: 56px; }
   }
 </style>
 </head>
@@ -121,80 +146,214 @@
       <li><a href="https://www.linkedin.com/in/daniil-kozlov-b63b36243/">LinkedIn</a></li>
     </ul>
   </div>
-  <div class="skyline" aria-hidden="true"><svg id="city" preserveAspectRatio="none"></svg></div>
+  <div class="city" aria-hidden="true"><svg id="city" preserveAspectRatio="xMidYMax slice"></svg></div>
 </header>
 
 <main>
   <section>
     <h2>Writing</h2>
-    <div class="entry">
-      <div class="where">Medium</div>
-      <!-- Replace the href below with the direct link to your article once it's published -->
-      <h3><a href="https://medium.com/@kozlovdaniil">AI Agent for Automating Playwright Tests in Power Apps</a></h3>
-      <p>A coding agent, one instruction file and a canvas app: 37 generated tests that found two real bugs.</p>
+    <div class="body">
+      <div class="entry">
+        <!-- Replace this href with the direct link to the article once it's published -->
+        <h3><a href="https://medium.com/@kozlovdaniil">AI Agent for Automating Playwright Tests in Power Apps</a></h3>
+        <p>A coding agent, one instruction file and a canvas app: 37 generated tests that found two real bugs.</p>
+        <div class="meta">On Medium</div>
+      </div>
     </div>
   </section>
 
   <section>
     <h2>Projects</h2>
-    <div class="entry">
-      <div class="where">GitHub</div>
-      <h3><a href="https://github.com/DaDozlov/automated-playwright-tests-with-powerapps-poc">Automated Playwright tests for Power Apps</a></h3>
-      <p>Instructions that let any coding agent export a canvas app, write user stories from its formulas, and generate Playwright tests that check the saved data in SharePoint.</p>
+    <div class="body">
+      <div class="entry">
+        <h3><a href="https://github.com/DaDozlov/automated-playwright-tests-with-powerapps-poc">Automated Playwright tests for Power Apps</a></h3>
+        <p>Instructions that let any coding agent export a canvas app, write user stories from its formulas, and generate Playwright tests that check the saved data in SharePoint.</p>
+        <div class="meta">On GitHub</div>
+      </div>
     </div>
   </section>
 
   <section>
     <h2>About</h2>
-    <p>I build software and spend most of my time figuring out where AI is genuinely useful in real projects, not just impressive in demos.</p>
-    <p class="muted">The easiest way to reach me is on LinkedIn.</p>
+    <div class="body">
+      <p>I build software and spend most of my time figuring out where AI is genuinely useful in real projects, not just impressive in demos.</p>
+      <p>The easiest way to reach me is on <a href="https://www.linkedin.com/in/daniil-kozlov-b63b36243/">LinkedIn</a>.</p>
+    </div>
   </section>
 </main>
 
 <footer>© <span id="year"></span> Daniil Kozlov</footer>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Draw a small night skyline with lit windows, the same every load
-  (function () {
-    const svg = document.getElementById('city');
-    const W = 1200, H = 200;
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    let seed = 7;
-    const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-    const ns = 'http://www.w3.org/2000/svg';
-    const add = (tag, attrs) => {
-      const el = document.createElementNS(ns, tag);
-      for (const k in attrs) el.setAttribute(k, attrs[k]);
-      svg.appendChild(el);
-      return el;
-    };
+/* Night city: bridge, three layers of buildings, landmarks and a bay with reflections.
+   Seeded random, so the skyline looks the same on every visit. */
+(function () {
+  const svg = document.getElementById('city');
+  const W = 1600, H = 400, SHORE = 318;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const ns = 'http://www.w3.org/2000/svg';
+  let seed = 42;
+  const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const between = (a, b) => a + rand() * (b - a);
 
-    for (let i = 0; i < 40; i++) {
-      add('circle', { class: 'star', cx: rand() * W, cy: rand() * 60, r: rand() * 1.2 + 0.3 });
-    }
+  const el = (tag, attrs, parent = svg) => {
+    const n = document.createElementNS(ns, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    parent.appendChild(n);
+    return n;
+  };
+  const group = (attrs = {}) => el('g', attrs);
 
-    let x = 0;
-    while (x < W) {
-      const w = 40 + rand() * 70;
-      const h = 50 + rand() * 140;
-      add('rect', { x, y: H - h, width: w + 1, height: h, style: 'fill: var(--building)' });
-      if (rand() > 0.85) {
-        add('rect', { x: x + w / 2 - 1, y: H - h - 22, width: 2, height: 22, style: 'fill: var(--building)' });
-      }
-      for (let wy = H - h + 10; wy < H - 8; wy += 14) {
-        for (let wx = x + 7; wx < x + w - 8; wx += 12) {
-          const r = rand();
-          if (r > 0.72) {
-            const cls = 'win' + (r > 0.96 ? ' cool' : '') + (r > 0.985 ? ' blink' : '');
-            add('rect', { class: cls, x: wx, y: wy, width: 4, height: 6, opacity: 0.5 + rand() * 0.5 });
-          }
+  const WARM = ['#FFD9A0', '#F6B46A', '#FFE7C2', '#F59E5B'];
+  const COOL = ['#BFE6F5', '#8FD3F0', '#E4F4FF'];
+  const windowColor = () => rand() > 0.82 ? COOL[Math.floor(rand() * COOL.length)] : WARM[Math.floor(rand() * WARM.length)];
+
+  // defs: water gradient
+  const defs = el('defs', {});
+  const wg = el('linearGradient', { id: 'water', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+  el('stop', { offset: '0%', 'stop-color': '#2B1F4E' }, wg);
+  el('stop', { offset: '100%', 'stop-color': '#070918' }, wg);
+
+  // stars
+  const stars = group();
+  for (let i = 0; i < 90; i++) {
+    const s = el('circle', { cx: rand() * W, cy: rand() * 150, r: between(0.4, 1.4), fill: '#FFFFFF', opacity: between(0.3, 0.9) }, stars);
+    if (rand() > 0.85) { s.setAttribute('class', 'twinkle'); s.style.animationDelay = `${-rand() * 4}s`; }
+  }
+
+  const lit = []; // windows that get a reflection
+
+  function windows(g, x, top, w, bottom, density, opacity, reflect) {
+    for (let wy = top + 8; wy < bottom - 6; wy += 11) {
+      for (let wx = x + 5; wx < x + w - 6; wx += 9) {
+        if (rand() < density) {
+          const c = windowColor();
+          const win = el('rect', { x: wx, y: wy, width: 4, height: 5, fill: c, opacity: opacity * between(0.55, 1) }, g);
+          if (rand() > 0.992) { win.setAttribute('class', 'blink'); win.style.animationDelay = `${-rand() * 7}s`; }
+          if (reflect && rand() > 0.6) lit.push([wx, wy, c]);
         }
       }
-      x += w + 2;
     }
-  })();
+  }
+
+  // ---- bridge (far left, over the water) ----
+  const bridge = group({ opacity: 0.9 });
+  const deckY = 286, t1 = 150, t2 = 420, towerTop = 196;
+  const cable = `M 0 ${deckY - 30} Q ${t1 / 2} ${deckY - 10} ${t1} ${towerTop}
+                 Q ${(t1 + t2) / 2} ${deckY + 4} ${t2} ${towerTop}
+                 Q ${t2 + 70} ${deckY - 10} 560 ${deckY - 4}`;
+  el('path', { d: cable, fill: 'none', stroke: '#3A3466', 'stroke-width': 1.5 }, bridge);
+  el('rect', { x: 0, y: deckY, width: 560, height: 4, fill: '#1A1638' }, bridge);
+  [t1, t2].forEach(tx => {
+    el('rect', { x: tx - 4, y: towerTop, width: 8, height: SHORE - towerTop, fill: '#1A1638' }, bridge);
+    el('circle', { cx: tx, cy: towerTop - 2, r: 2, fill: '#FF5A5A', class: 'beacon' }, bridge);
+  });
+  for (let bx = 4; bx < 560; bx += 7) {
+    el('circle', { cx: bx, cy: deckY + 1, r: 1.2, fill: '#FFD9A0', opacity: 0.9 }, bridge);
+    if (rand() > 0.5) lit.push([bx, deckY, '#FFD9A0']);
+  }
+  // cable lights: sample points along the path
+  const cablePath = bridge.querySelector('path');
+  const len = cablePath.getTotalLength();
+  for (let d = 0; d < len; d += 10) {
+    const p = cablePath.getPointAtLength(d);
+    el('circle', { cx: p.x, cy: p.y, r: 1, fill: '#BFE6F5', opacity: 0.85 }, bridge);
+  }
+  // far shore lights
+  for (let sx = 0; sx < 600; sx += between(4, 12)) {
+    el('circle', { cx: sx, cy: between(296, 302), r: 0.8, fill: WARM[Math.floor(rand() * 4)], opacity: 0.6 }, bridge);
+  }
+
+  // ---- far layer: hazy low skyline ----
+  const far = group();
+  let x = 470;
+  while (x < W) {
+    const w = between(26, 60), h = between(40, 110);
+    el('rect', { x, y: SHORE - h, width: w + 1, height: h, fill: '#2A2457' }, far);
+    windows(far, x, SHORE - h, w, SHORE, 0.18, 0.45, false);
+    x += w;
+  }
+
+  // ---- mid layer ----
+  const mid = group();
+  x = 520;
+  while (x < W) {
+    const w = between(34, 80), h = between(90, 200), top = SHORE - h;
+    const type = rand();
+    if (type < 0.25) {            // stepped tower
+      const inset = w * 0.2;
+      el('rect', { x: x + inset, y: top - 30, width: w - inset * 2, height: 31, fill: '#191A42' }, mid);
+      windows(mid, x + inset, top - 30, w - inset * 2, top, 0.4, 0.8, false);
+    } else if (type < 0.4) {      // slanted roof
+      el('polygon', { points: `${x},${top} ${x + w},${top - 24} ${x + w},${top} `, fill: '#191A42' }, mid);
+    }
+    el('rect', { x, y: top, width: w + 1, height: h, fill: '#191A42' }, mid);
+    windows(mid, x, top, w, SHORE, 0.38, 0.85, true);
+    x += w + between(0, 6);
+  }
+
+  // ---- landmarks ----
+  const marks = group();
+  // pyramid tower near the centre
+  const px = 840, pBase = 74, pTop = 34;
+  el('polygon', { points: `${px - pBase / 2},${SHORE} ${px},${pTop} ${px + pBase / 2},${SHORE}`, fill: '#141537' }, marks);
+  el('polygon', { points: `${px - 13},150 ${px - 22},150 ${px - 15},132`, fill: '#141537' }, marks);
+  el('polygon', { points: `${px + 13},150 ${px + 22},150 ${px + 15},132`, fill: '#141537' }, marks);
+  for (let y = 70; y < SHORE - 6; y += 9) {
+    const half = (y - pTop) / (SHORE - pTop) * (pBase / 2) - 5;
+    for (let wx = px - half; wx < px + half - 3; wx += 6) {
+      if (rand() < 0.5) {
+        const c = windowColor();
+        el('rect', { x: wx, y, width: 3, height: 4, fill: c, opacity: between(0.6, 1) }, marks);
+        if (rand() > 0.7) lit.push([wx, y, c]);
+      }
+    }
+  }
+  el('circle', { cx: px, cy: pTop - 2, r: 2.4, fill: '#FF5A5A', class: 'beacon' }, marks);
+
+  // tall tower with an antenna
+  const tx = 1220, tw = 64, th = 250;
+  el('rect', { x: tx, y: SHORE - th, width: tw, height: th, fill: '#141537' }, marks);
+  el('rect', { x: tx + 10, y: SHORE - th - 20, width: tw - 20, height: 21, fill: '#141537' }, marks);
+  el('rect', { x: tx + tw / 2 - 1.5, y: SHORE - th - 80, width: 3, height: 60, fill: '#141537' }, marks);
+  const b2 = el('circle', { cx: tx + tw / 2, cy: SHORE - th - 82, r: 2.4, fill: '#FF5A5A', class: 'beacon' }, marks);
+  b2.style.animationDelay = '-1.2s';
+  windows(marks, tx, SHORE - th, tw, SHORE, 0.5, 0.95, true);
+  // crown light strip
+  el('rect', { x: tx, y: SHORE - th, width: tw, height: 3, fill: '#8FD3F0', opacity: 0.9 }, marks);
+
+  // ---- near layer: dark foreground blocks with rooftop details ----
+  const near = group();
+  x = 600;
+  while (x < W) {
+    const w = between(50, 110), h = between(40, 120), top = SHORE - h;
+    el('rect', { x, y: top, width: w + 1, height: h, fill: '#0A0B24' }, near);
+    if (rand() > 0.6) { // water tower
+      const wtx = x + between(8, w - 24);
+      el('rect', { x: wtx, y: top - 14, width: 14, height: 10, fill: '#0A0B24' }, near);
+      el('polygon', { points: `${wtx - 1},${top - 14} ${wtx + 7},${top - 20} ${wtx + 15},${top - 14}`, fill: '#0A0B24' }, near);
+      el('rect', { x: wtx + 2, y: top - 4, width: 2, height: 4, fill: '#0A0B24' }, near);
+      el('rect', { x: wtx + 10, y: top - 4, width: 2, height: 4, fill: '#0A0B24' }, near);
+    } else if (rand() > 0.5) { // antenna
+      el('rect', { x: x + w * 0.7, y: top - 26, width: 2, height: 26, fill: '#0A0B24' }, near);
+    }
+    windows(near, x, top, w, SHORE, 0.3, 1, true);
+    x += w + between(10, 60);
+  }
+
+  // ---- water ----
+  el('rect', { x: 0, y: SHORE, width: W, height: H - SHORE, fill: 'url(#water)' });
+  el('rect', { x: 0, y: SHORE, width: W, height: 1.5, fill: '#F6B46A', opacity: 0.25 });
+  const refl = group();
+  lit.forEach(([wx, wy, c]) => {
+    const ry = SHORE + (SHORE - wy) * 0.32 + between(0, 4);
+    if (ry > H - 4) return;
+    const r = el('rect', { x: wx - 2, y: ry, width: between(5, 12), height: 1.4, fill: c, class: 'ripple' }, refl);
+    r.style.animationDelay = `${-rand() * 3}s`;
+  });
+})();
 </script>
 </body>
 </html>
