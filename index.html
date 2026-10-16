@@ -170,6 +170,11 @@
         <p>Instructions that let any coding agent export a canvas app, write user stories from its formulas, and generate Playwright tests that check the saved data in SharePoint.</p>
         <div class="meta">On GitHub</div>
       </div>
+      <div class="entry">
+        <h3><a href="https://github.com/DaDozlov/Praxis-Anruf-Beantworter">Voicemail transcription for medical practices</a></h3>
+        <p>Transcribes voicemails left at a doctor's office with Whisper and processes them with a local LLM through Ollama, so patient audio never leaves the machine. Python backend, React frontend.</p>
+        <div class="meta">On GitHub, a university team project</div>
+      </div>
     </div>
   </section>
 
@@ -266,44 +271,47 @@ document.getElementById('year').textContent = new Date().getFullYear();
     el('circle', { cx: sx, cy: between(296, 302), r: 0.8, fill: WARM[Math.floor(rand() * 4)], opacity: 0.6 }, bridge);
   }
 
+  // Buildings get lower towards the left edge, so the city tapers into the bay
+  const taper = (x, start, span) => Math.min(1, Math.max(0.35, (x - start) / span));
+
   // ---- far layer: hazy low skyline ----
   const far = group();
-  let x = 470;
+  let x = 480;
   while (x < W) {
-    const w = between(26, 60), h = between(40, 110);
+    const w = between(26, 60), h = between(50, 120) * taper(x, 480, 300);
     el('rect', { x, y: SHORE - h, width: w + 1, height: h, fill: '#2A2457' }, far);
-    windows(far, x, SHORE - h, w, SHORE, 0.18, 0.45, false);
+    windows(far, x, SHORE - h, w, SHORE, 0.16, 0.45, false);
     x += w;
   }
 
   // ---- mid layer ----
   const mid = group();
-  x = 520;
+  x = 540;
   while (x < W) {
-    const w = between(34, 80), h = between(90, 200), top = SHORE - h;
+    const w = between(40, 80), h = between(100, 200) * taper(x, 540, 260), top = SHORE - h;
     const type = rand();
-    if (type < 0.25) {            // stepped tower
-      const inset = w * 0.2;
-      el('rect', { x: x + inset, y: top - 30, width: w - inset * 2, height: 31, fill: '#191A42' }, mid);
-      windows(mid, x + inset, top - 30, w - inset * 2, top, 0.4, 0.8, false);
-    } else if (type < 0.4) {      // slanted roof
-      el('polygon', { points: `${x},${top} ${x + w},${top - 24} ${x + w},${top} `, fill: '#191A42' }, mid);
+    if (type < 0.3 && h > 120) {
+      // setback: a narrower upper tier centred on the building
+      const tw = Math.round(w * between(0.5, 0.7)), tx = x + (w - tw) / 2, th = between(20, 40);
+      el('rect', { x: tx, y: top - th, width: tw, height: th + 1, fill: '#191A42' }, mid);
+      windows(mid, tx, top - th, tw, top, 0.4, 0.8, false);
+    } else if (type < 0.5) {
+      // flat roof with a slightly wider cornice
+      el('rect', { x: x - 2, y: top - 4, width: w + 5, height: 4, fill: '#191A42' }, mid);
     }
     el('rect', { x, y: top, width: w + 1, height: h, fill: '#191A42' }, mid);
     windows(mid, x, top, w, SHORE, 0.38, 0.85, true);
-    x += w + between(0, 6);
+    x += w + between(2, 8);
   }
 
   // ---- landmarks ----
   const marks = group();
-  // pyramid tower near the centre
-  const px = 840, pBase = 74, pTop = 34;
+  // pyramid tower near the centre, with windows kept inside its outline
+  const px = 840, pBase = 76, pTop = 40;
   el('polygon', { points: `${px - pBase / 2},${SHORE} ${px},${pTop} ${px + pBase / 2},${SHORE}`, fill: '#141537' }, marks);
-  el('polygon', { points: `${px - 13},150 ${px - 22},150 ${px - 15},132`, fill: '#141537' }, marks);
-  el('polygon', { points: `${px + 13},150 ${px + 22},150 ${px + 15},132`, fill: '#141537' }, marks);
-  for (let y = 70; y < SHORE - 6; y += 9) {
-    const half = (y - pTop) / (SHORE - pTop) * (pBase / 2) - 5;
-    for (let wx = px - half; wx < px + half - 3; wx += 6) {
+  for (let y = pTop + 36; y < SHORE - 6; y += 9) {
+    const half = (y - pTop) / (SHORE - pTop) * (pBase / 2);
+    for (let wx = px - half + 4; wx + 3 < px + half - 4; wx += 6) {
       if (rand() < 0.5) {
         const c = windowColor();
         el('rect', { x: wx, y, width: 3, height: 4, fill: c, opacity: between(0.6, 1) }, marks);
@@ -313,36 +321,41 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }
   el('circle', { cx: px, cy: pTop - 2, r: 2.4, fill: '#FF5A5A', class: 'beacon' }, marks);
 
-  // tall tower with an antenna
+  // tall tower with a setback crown and an antenna
   const tx = 1220, tw = 64, th = 250;
   el('rect', { x: tx, y: SHORE - th, width: tw, height: th, fill: '#141537' }, marks);
   el('rect', { x: tx + 10, y: SHORE - th - 20, width: tw - 20, height: 21, fill: '#141537' }, marks);
-  el('rect', { x: tx + tw / 2 - 1.5, y: SHORE - th - 80, width: 3, height: 60, fill: '#141537' }, marks);
+  el('rect', { x: tx + tw / 2 - 1.5, y: SHORE - th - 80, width: 3, height: 61, fill: '#141537' }, marks);
   const b2 = el('circle', { cx: tx + tw / 2, cy: SHORE - th - 82, r: 2.4, fill: '#FF5A5A', class: 'beacon' }, marks);
   b2.style.animationDelay = '-1.2s';
   windows(marks, tx, SHORE - th, tw, SHORE, 0.5, 0.95, true);
-  // crown light strip
   el('rect', { x: tx, y: SHORE - th, width: tw, height: 3, fill: '#8FD3F0', opacity: 0.9 }, marks);
 
   // ---- near layer: dark foreground blocks with rooftop details ----
   const near = group();
-  x = 600;
+  x = 640;
   while (x < W) {
-    const w = between(50, 110), h = between(40, 120), top = SHORE - h;
+    const w = between(56, 110), h = between(44, 120) * taper(x, 640, 200), top = SHORE - h;
     el('rect', { x, y: top, width: w + 1, height: h, fill: '#0A0B24' }, near);
-    if (rand() > 0.6) { // water tower
-      const wtx = x + between(8, w - 24);
-      el('rect', { x: wtx, y: top - 14, width: 14, height: 10, fill: '#0A0B24' }, near);
-      el('polygon', { points: `${wtx - 1},${top - 14} ${wtx + 7},${top - 20} ${wtx + 15},${top - 14}`, fill: '#0A0B24' }, near);
-      el('rect', { x: wtx + 2, y: top - 4, width: 2, height: 4, fill: '#0A0B24' }, near);
-      el('rect', { x: wtx + 10, y: top - 4, width: 2, height: 4, fill: '#0A0B24' }, near);
-    } else if (rand() > 0.5) { // antenna
-      el('rect', { x: x + w * 0.7, y: top - 26, width: 2, height: 26, fill: '#0A0B24' }, near);
+    const detail = rand();
+    if (detail < 0.35 && w > 60) {
+      // water tower: round tank on short legs, with a conical roof
+      const cx = x + between(16, w - 16);
+      el('rect', { x: cx - 5, y: top - 6, width: 1.6, height: 6, fill: '#0A0B24' }, near);
+      el('rect', { x: cx + 3.4, y: top - 6, width: 1.6, height: 6, fill: '#0A0B24' }, near);
+      el('rect', { x: cx - 7, y: top - 18, width: 14, height: 12, rx: 2, fill: '#0A0B24' }, near);
+      el('polygon', { points: `${cx - 8},${top - 18} ${cx},${top - 25} ${cx + 8},${top - 18}`, fill: '#0A0B24' }, near);
+    } else if (detail < 0.6) {
+      // rooftop antenna
+      const ax = x + w * between(0.25, 0.75);
+      el('rect', { x: ax, y: top - 24, width: 2, height: 24, fill: '#0A0B24' }, near);
+    } else if (detail < 0.8) {
+      // small rooftop structure
+      el('rect', { x: x + w * 0.15, y: top - 8, width: w * 0.3, height: 8, fill: '#0A0B24' }, near);
     }
     windows(near, x, top, w, SHORE, 0.3, 1, true);
-    x += w + between(10, 60);
+    x += w + between(14, 60);
   }
-
   // ---- water ----
   el('rect', { x: 0, y: SHORE, width: W, height: H - SHORE, fill: 'url(#water)' });
   el('rect', { x: 0, y: SHORE, width: W, height: 1.5, fill: '#F6B46A', opacity: 0.25 });
